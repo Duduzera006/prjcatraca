@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Container, Button, Box } from '@mui/material';
+import StudentForm from './components/StudentForm';
+import StudentList from './components/StudentList';
+import AccessLogs from './components/AccessLogs';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Sistema de Controle de Acesso de Alunos
+          </Typography>
+          <Button color="inherit" component={Link} to="/">
+            Cadastro
+          </Button>
+          <Button color="inherit" component={Link} to="/alunos">
+            Alunos
+          </Button>
+          <Button color="inherit" component={Link} to="/registros">
+            Registros
+          </Button>
+        </Toolbar>
+      </AppBar>
+
+      <Container>
+        <Box sx={{ mt: 4 }}>
+          <Routes>
+            <Route path="/" element={<StudentForm />} />
+            <Route path="/alunos" element={<StudentList />} />
+            <Route path="/registros" element={<AccessLogs />} />
+          </Routes>
+        </Box>
+      </Container>
+    </Router>
   );
-}
+};
 
 export default App;
