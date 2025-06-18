@@ -41,7 +41,6 @@ const StudentList: React.FC = () => {
     const unsubscribe = onValue(studentsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        console.log(data)
         const studentsList = Object.entries(data).map(([uid, value]: [string, any]) => ({
           uid,
           ...value

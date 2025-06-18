@@ -30,6 +30,7 @@ import { AccessLog } from '../types';
 import { Student } from '../types';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { toZonedTime } from 'date-fns-tz';
 
 const AccessLogs: React.FC = () => {
   const [logs, setLogs] = useState<AccessLog[]>([]);
@@ -97,7 +98,9 @@ const AccessLogs: React.FC = () => {
     const [date, time] = timestamp.split('_');
     const formattedDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
     const formattedTime = `${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(4, 6)}`;
-    return format(new Date(`${formattedDate}T${formattedTime}`), "dd 'de' MMMM 'de' yyyy 'às' HH:mm:ss", { locale: ptBR });
+    const utcDate = new Date(`${formattedDate}T${formattedTime}Z`);
+    const zonedDate = toZonedTime(utcDate, 'America/Sao_Paulo');
+    return format(new Date(zonedDate), "dd 'de' MMMM 'de' yyyy 'às' HH:mm:ss", { locale: ptBR });
   };
 
   const renderStatus = (status: string) => {
